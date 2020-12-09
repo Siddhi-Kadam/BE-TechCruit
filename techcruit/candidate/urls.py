@@ -20,5 +20,6 @@ from . import views
 urlpatterns = [
     path('', views.dashCandidate, name='Candidate DashBoard'),
     path('profile', views.profile, name='Candidate Profile'),
-    path('resume', views.resume, name='Resume View')
+    path('resume', views.resume, name='Resume View'),
+    path('profileSaved', views.profileSaved, name='Candidate Profile Saved'),
 ]

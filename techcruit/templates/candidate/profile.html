@@ -56,12 +56,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Advanced Form</h1>
+            <h1>Profile Form</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Advanced Form</li>
+              <li class="breadcrumb-item active">Profile Form</li>
             </ol>
           </div>
         </div>
@@ -76,29 +76,17 @@
             <!-- jquery validation -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                <h3 class="card-title">Form reviewed by <small>Recruiters</small></h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" id="quickForm">
-                <div class="card-body">
-
-<!--                        <div class="form-group">-->
-<!--                          <label for="exampleInputEmail1">Email address</label>-->
-<!--                          <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">-->
-<!--                        </div>-->
-                        <div class="form-group">
-                          <label for="exampleInputPassword1">Password</label>
-                          <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                        </div>
-
-                </div>
+              <form role="form" id="quickForm" method="POST" action="profileSaved">
+                {% csrf_token %}
 
                 <div class="card-body pad">
-                  <h3><label> Introduction </label></h3>
+                  <h3><label> Career Objective </label></h3>
                   <div class="mb-3">
-                    <textarea class="textarea" placeholder="Place some text here"
-                              style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                    <textarea class="textarea" name="intro" placeholder="Place some text here" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                   </div>
                 </div>
 
@@ -141,7 +129,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                          <input type="text" class="form-control" name="date" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -149,8 +137,8 @@
                     <!-- /.col -->
                     <div class="col-12 col-sm-6">
                       <div class="form-group">
-                        <label>Website (if any)</label>
-                        <input type="text" name="website" class="form-control" placeholder="Enter Website">
+                        <label>Github Account</label>
+                        <input type="text" name="website" class="form-control" placeholder="Enter Link">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -166,7 +154,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-digital-tachograph"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "9999-9999-9999"' data-mask>
+                          <input type="text" class="form-control" name="aadharNo" data-inputmask='"mask": "9999-9999-9999"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -179,7 +167,7 @@
                           <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fa fa-clock"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "99"' data-mask>
+                          <input type="text" class="form-control" name="experience" data-inputmask='"mask": "99"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -196,7 +184,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "9999999999"' data-mask>
+                          <input type="text" class="form-control" name="mobile" data-inputmask='"mask": "9999999999"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -219,7 +207,7 @@
                     <div class="col-12 col-sm-6">
                       <div class="form-group">
                         <label>State</label>
-                        <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
+                        <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="state" class="form-control" required></select>
 
                       </div>
                       <!-- /.form-group -->
@@ -228,7 +216,7 @@
                     <div class="col-12 col-sm-6">
                       <div class="form-group">
                         <label>City</label>
-                        <select id ="state" class="form-control" required></select>
+                        <select id ="state" name="city" class="form-control" required></select>
                         <script language="javascript">print_state("sts");</script>
                       </div>
                       <!-- /.form-group -->
@@ -276,7 +264,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
+                          <input type="text" name="span10" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -285,7 +273,7 @@
                     <div class="col-12 col-sm-6">
                       <div class="form-group">
                         <label>University</label>
-                        <input type="text" name="jobTitle" class="form-control" placeholder="Enter Course">
+                        <input type="text" name="university10" class="form-control" placeholder="Enter University">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -301,7 +289,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-school"></i></span>
                           </div>
-                          <input type="text" name="jobTitle" class="form-control" placeholder="Enter School Name">
+                          <input type="text" name="school10" class="form-control" placeholder="Enter School Name">
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -314,7 +302,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-percentage"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "99.99"' data-mask>
+                          <input type="text" name="percent10" class="form-control" data-inputmask='"mask": "99.99"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -343,7 +331,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
+                          <input type="text" name="span12" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -352,7 +340,7 @@
                     <div class="col-12 col-sm-6">
                       <div class="form-group">
                         <label>University</label>
-                        <input type="text" name="jobTitle" class="form-control" placeholder="Enter Course">
+                        <input type="text" name="university12" class="form-control" placeholder="Enter University">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -368,7 +356,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-school"></i></span>
                           </div>
-                          <input type="text" name="jobTitle" class="form-control" placeholder="Enter College Name">
+                          <input type="text" name="college12" class="form-control" placeholder="Enter College Name">
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -381,7 +369,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-percentage"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "99.99"' data-mask>
+                          <input type="text" name="percent12" class="form-control" data-inputmask='"mask": "99.99"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -409,7 +397,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
+                          <input type="text" name="spanGrad" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -418,7 +406,7 @@
                     <div class="col-12 col-sm-6">
                       <div class="form-group">
                         <label>Course Studied</label>
-                        <input type="text" name="jobTitle" class="form-control" placeholder="Enter Course">
+                        <input type="text" name="courseGrad" class="form-control" placeholder="Enter Course">
                       </div>
                       <!-- /.form-group -->
                     </div>
@@ -434,7 +422,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-school"></i></span>
                           </div>
-                          <input type="text" name="jobTitle" class="form-control" placeholder="Enter College Name">
+                          <input type="text" name="schoolGrad" class="form-control" placeholder="Enter College Name">
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -447,7 +435,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-percentage"></i></span>
                           </div>
-                          <input type="text" class="form-control" data-inputmask='"mask": "99.99"' data-mask>
+                          <input type="text" name="percentGrad" class="form-control" data-inputmask='"mask": "99.99"' data-mask>
                         </div>
                       </div>
                       <!-- /.form-group -->
@@ -479,7 +467,7 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
                               </div>
-                              <input type="text" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
+                              <input type="text" name="span" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
                             </div>
                           </div>
                           <!-- /.form-group -->
@@ -488,7 +476,7 @@
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Job Title</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title">
+                            <input type="text" name="role" class="form-control" placeholder="Enter Job Title">
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -500,11 +488,11 @@
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Web Agency</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Agency worked in">
+                            <input type="text" name="agency" class="form-control" placeholder="Enter Agency worked in">
                           </div>
                           <div class="form-group">
                             <label>Language Worked On</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title">
+                            <input type="text" name="workedOn" class="form-control" placeholder="Enter Job Title">
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -512,7 +500,7 @@
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Work Performed</label>
-                            <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+                            <textarea class="form-control" name="workPerformed" rows="4" placeholder="Enter ..."></textarea>
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -543,17 +531,17 @@
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Project Name</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Project Name">
+                            <input type="text" name="proName" class="form-control" placeholder="Enter Project Name">
                           </div>
                           <div class="form-group">
                             <label>Project Service</label>
-                            <select class="form-control">
+                            <select name="proService" class="form-control">
                               <option>Select Service</option>
-                              <option>Web Designing</option>
-                              <option>Development</option>
-                              <option>Mobile App Development & Styling</option>
-                              <option>Graphic Designing</option>
-                              <option>Game Development</option>
+                              <option value="Web Designing">Web Designing</option>
+                              <option value="Development">Development</option>
+                              <option value="Mobile App Development & Styling">Mobile App Development & Styling</option>
+                              <option value="Graphic Designing">Graphic Designing</option>
+                              <option value="Game Development">Game Development</option>
                             </select>
                           </div>
                           <!-- /.form-group -->
@@ -562,7 +550,7 @@
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Project Information</label>
-                            <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+                            <textarea class="form-control" name="proInfo" rows="4" placeholder="Enter ..."></textarea>
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -592,7 +580,7 @@
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Language</label>
-                            <input type="text" name="code" class="form-control" placeholder="Enter Coding Language">
+                            <input type="text" name="language" class="form-control" placeholder="Enter Coding Language">
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -609,9 +597,6 @@
                 <!-- /.card-body -->
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary">Submit</button>
-                  <button type="button" class="btn btn-success swalDefaultSuccess">
-                  Launch Success Toast
-                </button>
                 </div>
               </form>
             </div>
@@ -885,52 +870,7 @@
 <!-- jquery-validation -->
 <script src="{% static 'ui_sections/plugins/jquery-validation/jquery.validate.min.js' %}"></script>
 <script src="{% static 'ui_sections/plugins/jquery-validation/additional-methods.min.js' %}"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-  $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
-  $('#quickForm').validate({
-    rules: {
-      email: {
-        required: true,
-        email: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      terms: {
-        required: true
-      },
-    },
-    messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
-      },
-      password: {
-        required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
-      },
-      terms: "Please accept our terms"
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
-});
-</script>
+
 
 
 <script type="text/javascript">
@@ -951,7 +891,7 @@ $(document).ready(function () {
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Language</label>
-                            <input type="text" name="code" class="form-control" placeholder="Enter Coding Language">
+                            <input type="text" name="language" class="form-control" placeholder="Enter Coding Language">
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -959,7 +899,7 @@ $(document).ready(function () {
                       </div>
                       <!-- /.row -->
                       <div class="form-group form-inline">
-                        <button class="btn btn-primary add_button" id="addLoanButton" type="button" style="color:white">+ Add one more Existing Loan Details</button>
+                        <button class="btn btn-primary add_button" id="addLoanButton" type="button" style="color:white">+ Add other Coding Languages</button>
                       </div>
                       <div class="additionalLoanDetail"></div>
                 </div>
@@ -994,17 +934,17 @@ $(document).ready(function () {
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Project Name</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Project Name">
+                            <input type="text" name="proName" class="form-control" placeholder="Enter Project Name">
                           </div>
                           <div class="form-group">
                             <label>Project Service</label>
-                            <select class="form-control">
+                            <select name="proService" class="form-control">
                               <option>Select Service</option>
-                              <option>Web Designing</option>
-                              <option>Development</option>
-                              <option>Mobile App Development & Styling</option>
-                              <option>Graphic Designing</option>
-                              <option>Game Development</option>
+                              <option value="Web Designing">Web Designing</option>
+                              <option value="Development">Development</option>
+                              <option value="Mobile App Development & Styling">Mobile App Development & Styling</option>
+                              <option value="Graphic Designing">Graphic Designing</option>
+                              <option value="Game Development">Game Development</option>
                             </select>
                           </div>
                           <!-- /.form-group -->
@@ -1013,7 +953,7 @@ $(document).ready(function () {
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Project Information</label>
-                            <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+                            <textarea class="form-control" name="proInfo" rows="4" placeholder="Enter ..."></textarea>
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -1021,10 +961,9 @@ $(document).ready(function () {
                       </div>
                       <!-- /.row -->
                       <div class="form-group form-inline">
-                        <button class="btn btn-primary add_button" id="addProButton" type="button" style="color:white">+ Add one more Existing Loan Details</button>
+                        <button class="btn btn-primary add_button" id="addProButton" type="button" style="color:white">+ Add other Projects</button>
                       </div>
                       <div class="additionalProDetail"></div>
-                  </div>
                 </div>
            </div>
             `); //Add field html
@@ -1062,7 +1001,7 @@ $(document).ready(function () {
                               <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-calendar-check"></i></span>
                               </div>
-                              <input type="text" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
+                              <input type="text" name="span" class="form-control" data-inputmask='"mask": "9999-9999"' data-mask>
                             </div>
                           </div>
                           <!-- /.form-group -->
@@ -1071,7 +1010,7 @@ $(document).ready(function () {
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Job Title</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title">
+                            <input type="text" name="role" class="form-control" placeholder="Enter Job Title">
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -1083,11 +1022,11 @@ $(document).ready(function () {
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Web Agency</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Agency worked in">
+                            <input type="text" name="agency" class="form-control" placeholder="Enter Agency worked in">
                           </div>
                           <div class="form-group">
                             <label>Language Worked On</label>
-                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title">
+                            <input type="text" name="workedOn" class="form-control" placeholder="Enter Job Title">
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -1095,7 +1034,7 @@ $(document).ready(function () {
                         <div class="col-12 col-sm-6">
                           <div class="form-group">
                             <label>Work Performed</label>
-                            <textarea class="form-control" rows="4" placeholder="Enter ..."></textarea>
+                            <textarea class="form-control" name="workPerformed" rows="4" placeholder="Enter ..."></textarea>
                           </div>
                           <!-- /.form-group -->
                         </div>
@@ -1103,10 +1042,10 @@ $(document).ready(function () {
                       </div>
                       <!-- /.row -->
                     <div class="form-group form-inline">
-                        <button class="btn btn-primary add_button" id="addJobButton" type="button" style="color:white">+ Add one more Existing Loan Details</button>
+                        <button class="btn btn-primary add_button" id="addJobButton" type="button" style="color:white">+ Add other job Experiences/Internships</button>
                       </div>
                       <div class="additionalJobDetail"></div>
-                  </div>
+                </div>
            </div>
             `); //Add field html
         });
