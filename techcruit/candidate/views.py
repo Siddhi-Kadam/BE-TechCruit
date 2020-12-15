@@ -88,7 +88,8 @@ def profileSaved(request):
             uid = 1
 
         # Saving in Personal Info
-        o = PersonalInfo(id=uid, username=username, name=name, intro=intro, jobTitle=jobTitle, date=date, website=website,
+        o = PersonalInfo(id=uid, username=username, name=name, intro=intro, jobTitle=jobTitle, date=date,
+                         website=website,
                          aadharNo=aadharNo, experience=experience, mobile=mobile, email=email, state=state, city=city)
         o.save()
 
@@ -132,4 +133,84 @@ def profileSaved(request):
                 abc.save()
 
     pyautogui.alert("Profile Successfully Saved")
-    return redirect('/candidate/')
+    return redirect('/candidate/resume')
+
+
+def bot(request):
+    return redirect('http://127.0.0.1:5000/')
+
+
+def edit_profile(request):
+    username = request.session["user"]
+    personal = PersonalInfo.objects.get(username=username)
+    academic = AcademicInfo.objects.get(uid_id=personal.id)
+    jobs = Jobs.objects.all()
+    project = Projects.objects.all()
+    code = Coding.objects.all()
+    return render(request, 'candidate/edit_profile.html',
+                  {'username': username, 'p': personal, 'a': academic, 'j': jobs, 'pro': project, 'c': code})
+
+
+def editProfileSaved(request):
+    if request.method == 'POST':
+        # Personal Info
+        uid = request.POST.get('uid')
+        name = request.POST.get('name')
+        intro = request.POST.get('intro')
+        jobTitle = request.POST.get('jobTitle')
+        date = request.POST.get('date')
+        website = request.POST.get('website')
+        aadharNo = request.POST.get('aadharNo')
+        experience = request.POST.get('experience')
+        mobile = request.POST.get('mobile')
+        email = request.POST.get('email')
+        state = request.POST.get('state')
+        city = request.POST.get('city')
+        username = request.POST.get('username')
+
+        # Academic Info
+        span10 = request.POST.get('span10')
+        university10 = request.POST.get('university10')
+        school10 = request.POST.get('school10')
+        percent10 = request.POST.get('percent10')
+        span12 = request.POST.get('span12')
+        university12 = request.POST.get('university12')
+        college12 = request.POST.get('college12')
+        percent12 = request.POST.get('percent12')
+        spanGrad = request.POST.get('spanGrad')
+        courseGrad = request.POST.get('courseGrad')
+        schoolGrad = request.POST.get('schoolGrad')
+        percentGrad = request.POST.get('percentGrad')
+
+        # Saving in Personal Info
+        abc = PersonalInfo.objects.get(id=uid)
+        abc.username = username
+        abc.name = name
+        abc.intro = intro
+        abc.jobTitle = jobTitle
+        abc.date = date
+        abc.website = website
+        abc.aadharNo = aadharNo
+        abc.experience = experience
+        abc.mobile = mobile
+        abc.email = email
+        abc.state = state
+        abc.city = city
+        abc.save()
+
+        # Saving in Academic Info
+        abc = AcademicInfo.objects.get(uid_id=uid)
+        abc.span10 = span10
+        abc.university10 = university10
+        abc.school10 = school10
+        abc.percent10 = percent10
+        abc.span12 = span12
+        abc.university12 = university12
+        abc.college12 = college12
+        abc.percent12 = percent12
+        abc.spanGrad = spanGrad
+        abc.courseGrad = courseGrad
+        abc.schoolGrad = schoolGrad
+        abc.percentGrad = percentGrad
+        abc.save()
+    return redirect('/candidate/resume')

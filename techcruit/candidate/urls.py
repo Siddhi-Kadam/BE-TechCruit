@@ -22,4 +22,7 @@ urlpatterns = [
     path('profile', views.profile, name='Candidate Profile'),
     path('resume', views.resume, name='Resume View'),
     path('profileSaved', views.profileSaved, name='Candidate Profile Saved'),
+    path('bot', views.bot, name='Resume View'),
+    path('edit_profile', views.edit_profile, name='Edit Profile'),
+    path('editProfileSaved', views.editProfileSaved, name='Edit Profile Saved'),
 ]

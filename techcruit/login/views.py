@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 import pyautogui
 from candidate.views import dashCandidate
+from recruiter.views import dashRecruiter
 # Create your views here.
 
 
@@ -20,7 +21,10 @@ def logging(request):
         if user is not None:
             auth.login(request, user)
             pyautogui.alert("Successfully logged in")
-            return redirect(dashCandidate)
+            if username == 'admin' and password == 'admin':
+                return redirect(dashRecruiter)
+            else:
+                return redirect(dashCandidate)
         else:
             pyautogui.alert("Wrong Username or Password")
             return redirect('/login')

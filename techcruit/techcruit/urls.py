@@ -24,5 +24,5 @@ urlpatterns = [
     path('login/',include('login.urls')),
     path('register/',include('register.urls')),
     path('candidate/',include('candidate.urls')),
-    path('recruiter/',include('recruiter.urls'))
+    path('recruiter/',include('recruiter.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
