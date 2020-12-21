@@ -25,4 +25,7 @@ urlpatterns = [
     path('bot', views.bot, name='Resume View'),
     path('edit_profile', views.edit_profile, name='Edit Profile'),
     path('editProfileSaved', views.editProfileSaved, name='Edit Profile Saved'),
+    path('test1/<int:id>', views.test1, name='Conduct Test 1'),
+    path('test1Scores', views.test1Scores, name='Scoring Test 1'),
+    path('selection', views.selection, name='Company Selection'),
 ]

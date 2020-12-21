@@ -21,7 +21,7 @@ def logging(request):
         if user is not None:
             auth.login(request, user)
             pyautogui.alert("Successfully logged in")
-            if username == 'admin' and password == 'admin':
+            if username[:5] == 'admin' and password[:5] == 'admin':
                 return redirect(dashRecruiter)
             else:
                 return redirect(dashCandidate)

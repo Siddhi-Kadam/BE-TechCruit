@@ -1,0 +1,65 @@
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Scores 1</title>
+    <link rel="shortcut icon" href="http://soteris.com.au/media/STS-Infinity.png">
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'ui_logreg/assets/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'ui_logreg/assets/css/style.css' %}">
+</head>
+<body>
+    <br><br><br>
+
+        <!-- Sign in  Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <figure><img src="{% static 'ui_logreg/assets/images/signin-image.jpg' %}" alt="sing up image"></figure>
+                    </div>
+
+                    <div class="signin-form">
+                        <h2 class="form-title">Scores</h2>
+                        <form method="POST" class="register-form" id="login-form" action="/candidate/">
+                            {% csrf_token %}
+                            Candidate ID
+                            <div class="form-group">
+                                <label><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="{{t.canID}}" readonly/>
+                            </div>
+                            Candidate User
+                            <div class="form-group">
+                                <label><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="{{t.canUser}}" readonly/>
+                            </div>
+                            Scores
+                            <div class="form-group">
+                                <label><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="{{t.scores}}/15"/>
+                            </div>
+                            Status
+                            <div class="form-group">
+                                <label><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input type="text" value="{{t.status}}"/>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Back"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    <!-- JS -->
+    <script src="{% static 'ui_logreg/assets/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'ui_logreg/assets/js/main.js' %}"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

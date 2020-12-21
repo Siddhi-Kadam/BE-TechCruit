@@ -1,8 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import PersonalInfo, AcademicInfo, Jobs, Coding, Projects
+from .models import PersonalInfo, AcademicInfo, Jobs, Coding, Projects, Selection
 import pyautogui
 from django.shortcuts import render, redirect
+from recruiter.models import SelectedBeforeTest, Register, TestQuestions, TestScores
 
 
 # Create your views here.
@@ -11,7 +12,23 @@ from django.shortcuts import render, redirect
 def dashCandidate(request):
     # return HttpResponse("Candidate DashBoard")
     username = request.session["user"]
-    return render(request, 'candidate/homepage.html', {'username': username})
+    count = 0
+    p = PersonalInfo.objects.all()
+    for i in p:
+        if i.username == username:
+            count = 1
+            cid = i.id
+            break
+    if count == 0:
+        return render(request, 'candidate/homepage.html', {'username': username})
+    else:
+        ad = []
+        r = Register.objects.all()
+        s = SelectedBeforeTest.objects.all()
+        for i in s:
+            if i.candidateID == cid:
+                ad.append(i.user)
+        return render(request, 'candidate/homepage.html', {'username': username, 'ad': ad, 'r': r})
 
 
 def profile(request):
@@ -34,6 +51,7 @@ def resume(request):
     username = request.session["user"]
     trial = PersonalInfo.objects.all()
     count = 0
+    exp, proj, code = 0, 0, 0
     for i in trial:
         if i.username == username:
             count = 1
@@ -42,12 +60,25 @@ def resume(request):
         p = PersonalInfo.objects.get(username=username)
         a = AcademicInfo.objects.get(uid_id=p.id)
         j = Jobs.objects.all()
+        for m in j:
+            if m.uid_id == p.id:
+                exp = 1
+                break
         pro = Projects.objects.all()
+        for m in pro:
+            if m.uid_id == p.id:
+                proj = 1
+                break
         c = Coding.objects.all()
-        return render(request, 'resume/resume.html', {'username': username, 'p': p, 'a': a, 'j': j, 'pro': pro, 'c': c})
+        for m in c:
+            if m.uid_id == p.id and m.language != 'Select Language':
+                code = 1
+                break
+        return render(request, 'resume/resume.html', {'username': username, 'p': p, 'a': a, 'j': j, 'pro': pro, 'c': c,
+                                                      'exp': exp, 'proj': proj, 'code': code})
     else:
         pyautogui.alert("Fill Profile Form to view Resume")
-        return redirect('/candidate/')
+        return redirect('/candidate/profile')
 
 
 def profileSaved(request):
@@ -142,13 +173,24 @@ def bot(request):
 
 def edit_profile(request):
     username = request.session["user"]
-    personal = PersonalInfo.objects.get(username=username)
-    academic = AcademicInfo.objects.get(uid_id=personal.id)
-    jobs = Jobs.objects.all()
-    project = Projects.objects.all()
-    code = Coding.objects.all()
-    return render(request, 'candidate/edit_profile.html',
-                  {'username': username, 'p': personal, 'a': academic, 'j': jobs, 'pro': project, 'c': code})
+    p = PersonalInfo.objects.all()
+    count = 0
+    for i in p:
+        if i.username == username:
+            count = 1
+        else:
+            continue
+    if count == 0:
+        pyautogui.alert("Profile isn't built, so first fill up the form")
+        return redirect('/candidate/profile')
+    else:
+        personal = PersonalInfo.objects.get(username=username)
+        academic = AcademicInfo.objects.get(uid_id=personal.id)
+        jobs = Jobs.objects.all()
+        project = Projects.objects.all()
+        code = Coding.objects.all()
+        return render(request, 'candidate/edit_profile.html',
+                      {'username': username, 'p': personal, 'a': academic, 'j': jobs, 'pro': project, 'c': code})
 
 
 def editProfileSaved(request):
@@ -214,3 +256,141 @@ def editProfileSaved(request):
         abc.percentGrad = percentGrad
         abc.save()
     return redirect('/candidate/resume')
+
+
+def test1(request, id):
+    username = request.session["user"]
+    p = PersonalInfo.objects.get(username=username)
+    u = Register.objects.get(id=id)
+    s = SelectedBeforeTest.objects.all()
+    t = Selection.objects.all()
+    for i in t:
+        if i.uid_id == p.id and u.name != i.compName and i.status == 'Selected':
+            pyautogui.alert("You are already being selected for another company..")
+            return redirect('/candidate/')
+    count = 0
+    for i in s:
+        if i.user == u.username:
+            if i.candidateID == p.id:
+                pyautogui.alert("Applicable")
+                count = 1
+                t = TestScores.objects.filter(user=u.username)
+                for j in t:
+                    if j.canUser == username:
+                        pyautogui.alert("Successfully Submitted")
+                        return render(request, 'candidate/Scores1.html', {'t': j})
+                abby = TestQuestions.objects.filter(user=u.username).order_by('?')[:15]
+                context = {"data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+                return render(request, 'candidate/test1.html', {'p': p, 'admin': u.username, 'username': username,
+                                                                'test': i, 'u': u, 'alldata': abby})
+    if count == 0:
+        pyautogui.alert("Sorry you aren't applicable for this test")
+        return redirect('/candidate/')
+
+
+def test1Scores(request):
+    if request.method == 'POST':
+        username = request.session["user"]
+        uid = request.POST.get('uid')
+        admin = request.POST.get('admin')
+        pid = request.POST.get('pid')
+        q1 = request.POST.get('ids1')
+        q2 = request.POST.get('ids2')
+        q3 = request.POST.get('ids3')
+        q4 = request.POST.get('ids4')
+        q5 = request.POST.get('ids5')
+        q6 = request.POST.get('ids6')
+        q7 = request.POST.get('ids7')
+        q8 = request.POST.get('ids8')
+        q9 = request.POST.get('ids9')
+        q10 = request.POST.get('ids10')
+        q11 = request.POST.get('ids11')
+        q12 = request.POST.get('ids12')
+        q13 = request.POST.get('ids13')
+        q14 = request.POST.get('ids14')
+        q15 = request.POST.get('ids15')
+        qi1 = request.POST.get('i1')
+        qi2 = request.POST.get('i2')
+        qi3 = request.POST.get('i3')
+        qi4 = request.POST.get('i4')
+        qi5 = request.POST.get('i5')
+        qi6 = request.POST.get('i6')
+        qi7 = request.POST.get('i7')
+        qi8 = request.POST.get('i8')
+        qi9 = request.POST.get('i9')
+        qi10 = request.POST.get('i10')
+        qi11 = request.POST.get('i11')
+        qi12 = request.POST.get('i12')
+        qi13 = request.POST.get('i13')
+        qi14 = request.POST.get('i14')
+        qi15 = request.POST.get('i15')
+        i = 0
+        a1 = TestQuestions.objects.get(id=q1)
+        if qi1 == a1.qAns:
+            i = i + 1
+        a2 = TestQuestions.objects.get(id=q2)
+        if qi2 == a2.qAns:
+            i = i + 1
+        a3 = TestQuestions.objects.get(id=q3)
+        if qi3 == a3.qAns:
+            i = i + 1
+        a4 = TestQuestions.objects.get(id=q4)
+        if qi4 == a4.qAns:
+            i = i + 1
+        a5 = TestQuestions.objects.get(id=q5)
+        if qi5 == a5.qAns:
+            i = i + 1
+        a6 = TestQuestions.objects.get(id=q6)
+        if qi6 == a6.qAns:
+            i = i + 1
+        a7 = TestQuestions.objects.get(id=q7)
+        if qi7 == a7.qAns:
+            i = i + 1
+        a8 = TestQuestions.objects.get(id=q8)
+        if qi8 == a8.qAns:
+            i = i + 1
+        a9 = TestQuestions.objects.get(id=q9)
+        if qi9 == a9.qAns:
+            i = i + 1
+        a10 = TestQuestions.objects.get(id=q10)
+        if qi10 == a10.qAns:
+            i = i + 1
+        a11 = TestQuestions.objects.get(id=q11)
+        if qi11 == a11.qAns:
+            i = i + 1
+        a12 = TestQuestions.objects.get(id=q12)
+        if qi12 == a12.qAns:
+            i = i + 1
+        a13 = TestQuestions.objects.get(id=q13)
+        if qi13 == a13.qAns:
+            i = i + 1
+        a14 = TestQuestions.objects.get(id=q14)
+        if qi14 == a14.qAns:
+            i = i + 1
+        a15 = TestQuestions.objects.get(id=q15)
+        if qi15 == a15.qAns:
+            i = i + 1
+        if i > 7:
+            status = 'Selected'
+        else:
+            status = 'Rejected'
+        o_ref = TestScores(user=admin, canID=pid, canUser=username, scores=i, status=status)
+        o_ref.save()
+        reg = Register.objects.get(id=uid)
+        abc = Selection(uid_id=pid, username=username, compName=reg.name, jobTitle=reg.jobTitle, scores=i,
+                        status=status)
+        abc.save()
+        t = TestScores.objects.filter(user=admin)
+        for j in t:
+            if j.canUser == username:
+                pyautogui.alert("Successfully Submitted")
+                return render(request, 'candidate/Scores1.html', {'t': j})
+    else:
+        pyautogui.alert("Couldn't be submitted")
+        return redirect('/candidate/')
+
+
+def selection(request):
+    username = request.session["user"]
+    s = Selection.objects.all()
+    return render(request, 'candidate/selection.html', {'s': s, 'username': username})

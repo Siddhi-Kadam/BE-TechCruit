@@ -80,138 +80,275 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form role="form" id="quickForm" method="POST" action="registered">
-                {% csrf_token %}
+                {% if count == 1 %}
+                        <form role="form" id="quickForm1" method="POST">
+                          {% csrf_token %}
 
-                <div class="card-body">
+                          <div class="card-body">
 
-                  <div class="row">
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>Company Name</label>
-                        <input type="text" name="name" class="form-control" placeholder="Enter Name">
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>Job Title</label>
-                        <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title">
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Company Name</label>
+                                  <input type="text" name="name" class="form-control" value="{{i.name}}" placeholder="Enter Name" readonly>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Job Title</label>
+                                  <input type="text" name="jobTitle" class="form-control" value="{{i.jobTitle}}" placeholder="Enter Job Title" readonly>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
 
-                  <div class="row">
+                            <div class="row">
 
-                    <!-- /.col -->
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>Bond Period (in months)</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Bond Period (in months)</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="bond" value="{{i.bond}}" data-inputmask='"mask": "99"' data-mask readonly>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Salary</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">Rs.</span>
+                                    </div>
+                                    <input type="number" class="form-control" value="{{i.salary}}" name="salary" readonly>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>10 Percentage</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="percent10" value="{{i.percent10}}" data-inputmask='"mask": "99"' data-mask readonly>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>12 Percentage</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="percent12" value="{{i.percent12}}" data-inputmask='"mask": "99"' data-mask readonly>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Graduation Percentage</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="percentGrad" value="{{i.percentGrad}}" data-inputmask='"mask": "99"' data-mask readonly>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Experience (in months)</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="experience" value="{{i.experience}}" data-inputmask='"mask": "99"' data-mask readonly>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.row -->
+                            <script src="{% static 'ui_sections/plugins/cities.js' %}"></script>
+
+
+
+<!--                            <div class="coding">-->
+<!--                                <div class="row">-->
+<!--                                  <div class="col-12 col-sm-6">-->
+<!--                                    <div class="form-group">-->
+<!--                                      <label>Language</label>-->
+<!--                                      <select name="code" class="form-control" re>-->
+<!--                                        <option>Select Language</option>-->
+<!--                                        <option value="C">C</option>-->
+<!--                                        <option value="Python">Python</option>-->
+<!--                                        <option value="Django">Django</option>-->
+<!--                                        <option value="Flutter">Flutter</option>-->
+<!--                                        <option value="Web Development">Web Development</option>-->
+<!--                                      </select>-->
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash; /.form-group &ndash;&gt;-->
+<!--                                  </div>-->
+<!--                                  &lt;!&ndash; /.col &ndash;&gt;-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash; /.row &ndash;&gt;-->
+<!--                            </div>-->
                           </div>
-                          <input type="text" class="form-control" name="bond" data-inputmask='"mask": "99"' data-mask>
-                        </div>
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-
-                  <div class="row">
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>10 Percentage</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                          <!-- /.card-body -->
+                          <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" disabled>Submit</button>
                           </div>
-                          <input type="text" class="form-control" name="percent10" data-inputmask='"mask": "99"' data-mask>
-                        </div>
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>12 Percentage</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-percent"></i></span>
-                          </div>
-                          <input type="text" class="form-control" name="percent12" data-inputmask='"mask": "99"' data-mask>
-                        </div>
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
+                        </form>
+                {% else %}
+                        <form role="form" id="quickForm" method="POST" action="registered">
+                          {% csrf_token %}
 
-                  <div class="row">
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>Salary</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text">Rs.</span>
-                          </div>
-                          <input type="number" class="form-control" name="salary">
-                        </div>
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                    <div class="col-12 col-sm-6">
-                      <div class="form-group">
-                        <label>Experience (in months)</label>
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fa fa-clock"></i></span>
-                          </div>
-                          <input type="text" class="form-control" name="experience" data-inputmask='"mask": "99"' data-mask>
-                        </div>
-                      </div>
-                      <!-- /.form-group -->
-                    </div>
-                      <!-- /.form-group -->
-                    </div>
-                  <!-- /.row -->
-                  <script src="{% static 'ui_sections/plugins/cities.js' %}"></script>
+                          <div class="card-body">
 
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Company Name</label>
+                                  <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Job Title</label>
+                                  <input type="text" name="jobTitle" class="form-control" placeholder="Enter Job Title">
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
 
+                            <div class="row">
 
-                  <div class="coding">
-                      <div class="row">
-                        <div class="col-12 col-sm-6">
-                          <div class="form-group">
-                            <label>Language</label>
-                            <select name="code" class="form-control">
-                              <option>Select Language</option>
-                              <option value="C">C</option>
-                              <option value="Python">Python</option>
-                              <option value="Django">Django</option>
-                              <option value="Flutter">Flutter</option>
-                              <option value="Web Development">Web Development</option>
-                            </select>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Bond Period (in months)</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="bond" data-inputmask='"mask": "99"' data-mask>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Salary</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">Rs.</span>
+                                    </div>
+                                    <input type="number" class="form-control" name="salary">
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>10 Percentage</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="percent10" data-inputmask='"mask": "99"' data-mask>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>12 Percentage</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="percent12" data-inputmask='"mask": "99"' data-mask>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Graduation Percentage</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-percent"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="percentGrad" data-inputmask='"mask": "99"' data-mask>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                              <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                  <label>Experience (in months)</label>
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="experience" data-inputmask='"mask": "99"' data-mask>
+                                  </div>
+                                </div>
+                                <!-- /.form-group -->
+                              </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.row -->
+                            <script src="{% static 'ui_sections/plugins/cities.js' %}"></script>
+
                           </div>
-                          <!-- /.form-group -->
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                      <!-- /.row -->
-                  </div>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-              </form>
+                          <!-- /.card-body -->
+                          <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                          </div>
+                        </form>
+                {% endif %}
             </div>
             <!-- /.card -->
             </div>

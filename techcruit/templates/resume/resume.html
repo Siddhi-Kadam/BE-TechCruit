@@ -44,6 +44,7 @@
                     <p>Location : {{p.state}}, {{p.city}}</p>
                 </div>
             </div>
+            {% if code %}
             <div class="widget card">
                 <div class="card-body">
                     <div class="widget-content">
@@ -56,17 +57,18 @@
                     </div>
                 </div>
             </div>
-            <div class="widget card">
-                <div class="card-body">
-                    <div class="widget-content">
-                        <h5 class="widget-title card-title">INTERESTS</h5>
-                        <p>Video games</p>
-                        <p>Finance</p>
-                        <p>Basketball</p>
-                        <p>Theatre</p>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
+<!--            <div class="widget card">-->
+<!--                <div class="card-body">-->
+<!--                    <div class="widget-content">-->
+<!--                        <h5 class="widget-title card-title">INTERESTS</h5>-->
+<!--                        <p>Video games</p>-->
+<!--                        <p>Finance</p>-->
+<!--                        <p>Basketball</p>-->
+<!--                        <p>Theatre</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </aside>
         <main>
             <section class="intro-section">
@@ -98,6 +100,7 @@
                             </li>
                         </ul>
                     </div>
+                    {% if exp %}
                     <div class="col-lg-6">
                         <h2 class="section-title">Experience</h2>
                         <ul class="time-line">
@@ -114,10 +117,11 @@
                             {% endfor %}
                         </ul>
                     </div>
-
+                    {% endif %}
                 </div>
             </section>
             <section class="services-section">
+                {% if proj %}
                 <h6 class="section-subtitle">WHAT I DID</h6>
                 <h2 class="section-title">PROJECTS</h2>
                 <div class="row">
@@ -136,6 +140,7 @@
                         {% endif %}
                     {% endfor %}
                 </div>
+                {% endif %}
             </section>
 
 

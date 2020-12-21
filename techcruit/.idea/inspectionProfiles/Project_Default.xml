@@ -27,6 +27,7 @@
         <list>
           <option value="sum" />
           <option value="next" />
+          <option value="id" />
         </list>
       </option>
     </inspection_tool>

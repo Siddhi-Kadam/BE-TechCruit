@@ -53,3 +53,13 @@ class AcademicInfo(models.Model):
     courseGrad = models.CharField(max_length=200, blank=True, null=True)
     schoolGrad = models.CharField(max_length=500, blank=True, null=True)
     percentGrad = models.FloatField()
+
+
+class Selection(models.Model):
+    uid = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE)
+    username = models.CharField(max_length=200)
+    compName = models.CharField(max_length=200)
+    jobTitle = models.CharField(max_length=200)
+    scores = models.IntegerField()
+    status = models.CharField(max_length=20)
+
