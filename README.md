@@ -1,5 +1,8 @@
 # BE-TechCruit
 
-Start by
+Techcruit Start by:-
+D:\BE-TechCruit\BE-TechCruit\techcruit>python manage.py runserver
 
-python manage.py runserver
+ChatBot start by:-
+D:\ChatBot\coronabot-chatterbot>python app.py
+
