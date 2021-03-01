@@ -23,11 +23,11 @@
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
-  {% include 'candidate/navbar.html' %}
+  {% include 'recruiter/navbar.html' %}
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  {% include 'candidate/sidebar.html' %}
+  {% include 'recruiter/sidebar.html' %}
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -39,7 +39,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Selection in Companies</h3>
+              <h3 class="card-title">Scores for Test 1</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -47,47 +47,26 @@
                 <thead>
                 <tr>
                   <th>ID</th>
-                  <th>User Name</th>
-                  <th>Company Name</th>
-                  <th>Job Title</th>
+                  <th>Admin User</th>
+                  <th>Candidate ID</th>
+                  <th>Candidate User</th>
                   <th>Scores</th>
                   <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
                     {% for i in s %}
-                        {% if username == i.username %}
-                            <input type="hidden" name="id" value="{{i.id}}">
-                            <tr>
-                                <td>{{i.id}}</td>
-                                <td>{{i.username}}</td>
-                                <td>{{i.compName}}</td>
-                                <td>{{i.jobTitle}}</td>
-                                <td>{{i.scores}}</td>
-                                {% if i.status == 'Selected' %}
-                                    <td>Test 1 Selected</td>
-                                {% else %}
-                                    <td>Test 1 Rejected</td>
-                                {% endif %}
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                    {% for i in s1 %}
-                        {% if username == i.username %}
-                            <input type="hidden" name="id" value="{{i.id}}">
-                            <tr>
-                                <td>{{i.id}}</td>
-                                <td>{{i.username}}</td>
-                                <td>{{i.compName}}</td>
-                                <td>{{i.jobTitle}}</td>
-                                <td>{{i.scores}}</td>
-                                {% if i.status == 'Selected' %}
-                                    <td>Test 2 Selected</td>
-                                {% else %}
-                                    <td>Test 2 Rejected</td>
-                                {% endif %}
-                            </tr>
-                        {% endif %}
+                      {% if i.user == username %}
+                        <input type="hidden" name="id" value="{{i.id}}">
+                        <tr>
+                            <td>{{i.id}}</td>
+                            <td>{{i.user}}</td>
+                            <td>{{i.canID}}</td>
+                            <td>{{i.canUser}}</td>
+                            <td>{{i.scores}}</td>
+                            <td>{{i.status}}</td>
+                        </tr>
+                      {% endif %}
                     {% endfor %}
                 </tbody>
               </table>

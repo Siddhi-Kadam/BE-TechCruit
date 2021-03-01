@@ -1,0 +1,176 @@
+{% load static %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF55;
+  color: white;
+}
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.button1 {
+  background-color: white;
+  color: black;
+  border: 2px solid #555555;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+.button1:hover {
+  background-color: #555555;
+  color: white;
+}
+
+.button2 {
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
+    </style>
+</head>
+<body>
+{% if user.is_authenticated %}
+<br>
+
+<h1><center>Welcome to {{u.name}} Test 2</center></h1>
+<h2>
+    <center>
+        Username: {{username}}<br>
+        Candidate Name: {{p.name}}<br>
+    </center>
+</h2>
+<form id="myForm" action="/candidate/test2Scores" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="uid" value="{{u.id}}">
+    <input type="hidden" name="admin" value="{{admin}}">
+<input type="hidden" name="pid" value="{{p.id}}">
+<table border="1" cellpadding="5" cellspacing="5" align="center" id="customers">
+    <tr>
+        <th>Question No.</th>
+        <th>Questions</th>
+        <th>Options</th>
+        <th>Selected Option</th>
+    </tr>
+{% for i in alldata %}
+
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <input name="ids{{forloop.counter}}" type="hidden" value="{{i.id}}" readonly/>
+        <td>{{i.question}}</td>
+        <td>
+            <label><input type="radio" name="q{{forloop.counter}}" value="A" checked>{{i.qa}}</label><br>
+			<label><input type="radio" name="q{{forloop.counter}}" value="B">{{i.qb}}</label><br>
+            <label><input type="radio" name="q{{forloop.counter}}" value="C">{{i.qc}}</label><br>
+			<label><input type="radio" name="q{{forloop.counter}}" value="D">{{i.qd}}</label><br>
+            <label><input type="radio" name="q{{forloop.counter}}" value="E">{{i.qAns}}</label><br>
+        </td>
+        <td>
+<!--          <label class="o{{forloop.counter}}" name="a{{forloop.counter}}"></label>-->
+            <input id="input{{forloop.counter}}" name="i{{forloop.counter}}" type="text" value="" readonly/>
+        </td>
+    </tr>
+{% endfor %}
+</table>
+    <input type="submit" class="button button2">
+    </form>
+<button class="button button1" id="btn">Check option button</button>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript">
+	// Check the radio button value.
+		$('#btn').on('click', function() {
+			o1 =$('input[name=q1]:checked','#myForm').val();
+			o2 =$('input[name=q2]:checked','#myForm').val();
+			o3 =$('input[name=q3]:checked','#myForm').val();
+			o4 =$('input[name=q4]:checked','#myForm').val();
+			o5 =$('input[name=q5]:checked','#myForm').val();
+            o6 =$('input[name=q6]:checked','#myForm').val();
+			o7 =$('input[name=q7]:checked','#myForm').val();
+			o8 =$('input[name=q8]:checked','#myForm').val();
+			o9 =$('input[name=q9]:checked','#myForm').val();
+			o10 =$('input[name=q10]:checked','#myForm').val();
+			o11 =$('input[name=q11]:checked','#myForm').val();
+			o12 =$('input[name=q12]:checked','#myForm').val();
+			o13 =$('input[name=q13]:checked','#myForm').val();
+			o14 =$('input[name=q14]:checked','#myForm').val();
+			o15 =$('input[name=q15]:checked','#myForm').val();
+			$('#input1').val(o1);
+			$('#input2').val(o2);
+			$('#input3').val(o3);
+			$('#input4').val(o4);
+			$('#input5').val(o5);
+			$('#input6').val(o6);
+			$('#input7').val(o7);
+			$('#input8').val(o8);
+			$('#input9').val(o9);
+			$('#input10').val(o10);
+			$('#input11').val(o11);
+			$('#input12').val(o12);
+			$('#input13').val(o13);
+			$('#input14').val(o14);
+			$('#input15').val(o15);
+            document.querySelector('.o1').textContent = o1;
+            document.querySelector('.o2').textContent = o2;
+            document.querySelector('.o3').textContent = o3;
+            document.querySelector('.o4').textContent = o4;
+            document.querySelector('.o5').textContent = o5;
+            document.querySelector('.o6').textContent = o6;
+            document.querySelector('.o7').textContent = o7;
+            document.querySelector('.o8').textContent = o8;
+            document.querySelector('.o9').textContent = o9;
+            document.querySelector('.o10').textContent = o10;
+            document.querySelector('.o11').textContent = o11;
+            document.querySelector('.o12').textContent = o12;
+            document.querySelector('.o13').textContent = o13;
+            document.querySelector('.o14').textContent = o14;
+            document.querySelector('.o15').textContent = o15;
+		});
+	</script>
+{% else %}
+                             Not logged in.
+                         {% endif %}
+</body>
+</html>

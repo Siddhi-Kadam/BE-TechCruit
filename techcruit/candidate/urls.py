@@ -19,6 +19,7 @@ from . import views
 
 urlpatterns = [
     path('', views.dashCandidate, name='Candidate DashBoard'),
+    path('dash2', views.dash2, name='Candidate DashBoard 2'),
     path('profile', views.profile, name='Candidate Profile'),
     path('resume', views.resume, name='Resume View'),
     path('profileSaved', views.profileSaved, name='Candidate Profile Saved'),
@@ -26,6 +27,8 @@ urlpatterns = [
     path('edit_profile', views.edit_profile, name='Edit Profile'),
     path('editProfileSaved', views.editProfileSaved, name='Edit Profile Saved'),
     path('test1/<int:id>', views.test1, name='Conduct Test 1'),
+    path('test2/<int:id>', views.test2, name='Conduct Test 2'),
     path('test1Scores', views.test1Scores, name='Scoring Test 1'),
+    path('test2Scores', views.test2Scores, name='Scoring Test 2'),
     path('selection', views.selection, name='Company Selection'),
 ]

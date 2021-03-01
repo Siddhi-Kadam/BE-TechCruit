@@ -1,16 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import PersonalInfo, AcademicInfo, Jobs, Coding, Projects, Selection
+from .models import PersonalInfo, AcademicInfo, Jobs, Coding, Projects, Selection, Selection2
 import pyautogui
 from django.shortcuts import render, redirect
-from recruiter.models import SelectedBeforeTest, Register, TestQuestions, TestScores
+from recruiter.models import SelectedBeforeTest, Register, TestQuestions, TestScores, TestScores2, BehavioralQuestions
 
 
 # Create your views here.
 
 
 def dashCandidate(request):
-    # return HttpResponse("Candidate DashBoard")
     username = request.session["user"]
     count = 0
     p = PersonalInfo.objects.all()
@@ -29,6 +28,28 @@ def dashCandidate(request):
             if i.candidateID == cid:
                 ad.append(i.user)
         return render(request, 'candidate/homepage.html', {'username': username, 'ad': ad, 'r': r})
+
+
+def dash2(request):
+    username = request.session["user"]
+    count = 0
+    p = PersonalInfo.objects.all()
+    for i in p:
+        if i.username == username:
+            count = 1
+            cid = i.id
+            break
+    if count == 0:
+        return render(request, 'candidate/homepage.html', {'username': username})
+    else:
+        ad = []
+        r = Register.objects.all()
+        s = Selection.objects.all()
+        for i in s:
+            for j in r:
+                if i.uid_id == cid and i.status == 'Selected' and j.name == i.compName:
+                    ad.append(j.username)
+        return render(request, 'candidate/homepage2.html', {'username': username, 'ad': ad, 'r': r})
 
 
 def profile(request):
@@ -288,6 +309,36 @@ def test1(request, id):
         return redirect('/candidate/')
 
 
+def test2(request, id):
+    username = request.session["user"]
+    p = PersonalInfo.objects.get(username=username)
+    u = Register.objects.get(id=id)
+    s = Selection.objects.all()
+    t = Selection2.objects.all()
+    for i in t:
+        if i.uid_id == p.id and u.name != i.compName and i.status == 'Selected':
+            pyautogui.alert("You are already being selected for another company..")
+            return redirect('/candidate/')
+    count = 0
+    for i in s:
+        if i.compName == u.name:
+            if i.uid_id == p.id:
+                pyautogui.alert("Applicable")
+                count = 1
+                t = TestScores2.objects.filter(user=u.username)
+                for j in t:
+                    if j.canUser == username:
+                        pyautogui.alert("Successfully Submitted")
+                        return render(request, 'candidate/Scores2.html', {'t': j})
+                abby = BehavioralQuestions.objects.all().order_by('?')[:15]
+                context = {"data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+                return render(request, 'candidate/test2.html', {'p': p, 'admin': u.username, 'username': username,
+                                                                'test': i, 'u': u, 'alldata': abby})
+    if count == 0:
+        pyautogui.alert("Sorry you aren't applicable for this test")
+        return redirect('/candidate/')
+
+
 def test1Scores(request):
     if request.method == 'POST':
         username = request.session["user"]
@@ -377,8 +428,22 @@ def test1Scores(request):
         o_ref = TestScores(user=admin, canID=pid, canUser=username, scores=i, status=status)
         o_ref.save()
         reg = Register.objects.get(id=uid)
-        abc = Selection(uid_id=pid, username=username, compName=reg.name, jobTitle=reg.jobTitle, scores=i,
-                        status=status)
+        cand = PersonalInfo.objects.get(username=username)
+        acad = AcademicInfo.objects.get(uid_id=cand.id)
+        abc = Selection(
+            uid_id=pid,
+            fullname=cand.name,
+            username=username,
+            ssc=acad.percent10,
+            hsc=acad.percent12,
+            grad=acad.percentGrad,
+            course=acad.courseGrad,
+            scores=i,
+            compName=reg.name,
+            salary=reg.salary,
+            jobTitle=reg.jobTitle,
+            status=status
+        )
         abc.save()
         t = TestScores.objects.filter(user=admin)
         for j in t:
@@ -390,7 +455,124 @@ def test1Scores(request):
         return redirect('/candidate/')
 
 
+def test2Scores(request):
+    if request.method == 'POST':
+        username = request.session["user"]
+        uid = request.POST.get('uid')
+        admin = request.POST.get('admin')
+        pid = request.POST.get('pid')
+        q1 = request.POST.get('ids1')
+        q2 = request.POST.get('ids2')
+        q3 = request.POST.get('ids3')
+        q4 = request.POST.get('ids4')
+        q5 = request.POST.get('ids5')
+        q6 = request.POST.get('ids6')
+        q7 = request.POST.get('ids7')
+        q8 = request.POST.get('ids8')
+        q9 = request.POST.get('ids9')
+        q10 = request.POST.get('ids10')
+        q11 = request.POST.get('ids11')
+        q12 = request.POST.get('ids12')
+        q13 = request.POST.get('ids13')
+        q14 = request.POST.get('ids14')
+        q15 = request.POST.get('ids15')
+        qi1 = request.POST.get('i1')
+        qi2 = request.POST.get('i2')
+        qi3 = request.POST.get('i3')
+        qi4 = request.POST.get('i4')
+        qi5 = request.POST.get('i5')
+        qi6 = request.POST.get('i6')
+        qi7 = request.POST.get('i7')
+        qi8 = request.POST.get('i8')
+        qi9 = request.POST.get('i9')
+        qi10 = request.POST.get('i10')
+        qi11 = request.POST.get('i11')
+        qi12 = request.POST.get('i12')
+        qi13 = request.POST.get('i13')
+        qi14 = request.POST.get('i14')
+        qi15 = request.POST.get('i15')
+        i = 0
+        a1 = BehavioralQuestions.objects.get(id=q1)
+        if qi1 == a1.qe:
+            i = i + 1
+        a2 = BehavioralQuestions.objects.get(id=q2)
+        if qi2 == a2.qe:
+            i = i + 1
+        a3 = BehavioralQuestions.objects.get(id=q3)
+        if qi3 == a3.qe:
+            i = i + 1
+        a4 = BehavioralQuestions.objects.get(id=q4)
+        if qi4 == a4.qe:
+            i = i + 1
+        a5 = BehavioralQuestions.objects.get(id=q5)
+        if qi5 == a5.qe:
+            i = i + 1
+        a6 = BehavioralQuestions.objects.get(id=q6)
+        if qi6 == a6.qe:
+            i = i + 1
+        a7 = BehavioralQuestions.objects.get(id=q7)
+        if qi7 == a7.qe:
+            i = i + 1
+        a8 = BehavioralQuestions.objects.get(id=q8)
+        if qi8 == a8.qe:
+            i = i + 1
+        a9 = BehavioralQuestions.objects.get(id=q9)
+        if qi9 == a9.qe:
+            i = i + 1
+        a10 = BehavioralQuestions.objects.get(id=q10)
+        if qi10 == a10.qe:
+            i = i + 1
+        a11 = BehavioralQuestions.objects.get(id=q11)
+        if qi11 == a11.qe:
+            i = i + 1
+        a12 = BehavioralQuestions.objects.get(id=q12)
+        if qi12 == a12.qe:
+            i = i + 1
+        a13 = BehavioralQuestions.objects.get(id=q13)
+        if qi13 == a13.qe:
+            i = i + 1
+        a14 = BehavioralQuestions.objects.get(id=q14)
+        if qi14 == a14.qe:
+            i = i + 1
+        a15 = BehavioralQuestions.objects.get(id=q15)
+        if qi15 == a15.qe:
+            i = i + 1
+        if i > 7:
+            status = 'Selected'
+        else:
+            status = 'Rejected'
+        o_ref = TestScores2(user=admin, canID=pid, canUser=username, scores=i, status=status)
+        o_ref.save()
+        reg = Register.objects.get(id=uid)
+        cand = PersonalInfo.objects.get(username=username)
+        acad = AcademicInfo.objects.get(uid_id=cand.id)
+        abc = Selection2(
+            uid_id=pid,
+            fullname=cand.name,
+            username=username,
+            ssc=acad.percent10,
+            hsc=acad.percent12,
+            grad=acad.percentGrad,
+            course=acad.courseGrad,
+            scores=i,
+            compName=reg.name,
+            salary=reg.salary,
+            jobTitle=reg.jobTitle,
+            status=status
+        )
+        abc.save()
+        t = TestScores2.objects.filter(user=admin)
+        for j in t:
+            if j.canUser == username:
+                pyautogui.alert("Successfully Submitted")
+                return render(request, 'candidate/Scores2.html', {'t': j})
+    else:
+        pyautogui.alert("Couldn't be submitted")
+        return redirect('/candidate/')
+
+
 def selection(request):
     username = request.session["user"]
     s = Selection.objects.all()
-    return render(request, 'candidate/selection.html', {'s': s, 'username': username})
+    s1 = Selection2.objects.all()
+    return render(request, 'candidate/selection.html', {'s': s, 's1': s1, 'username': username})

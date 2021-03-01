@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'techcruit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'BEtechcruit',
+        'NAME': 'TECH2',
         'USER': 'postgres',
         'PASSWORD': 'siddhi',
         'HOST': 'localhost'

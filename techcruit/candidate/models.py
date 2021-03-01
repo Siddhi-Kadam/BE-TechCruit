@@ -57,9 +57,31 @@ class AcademicInfo(models.Model):
 
 class Selection(models.Model):
     uid = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE)
+    fullname = models.CharField(max_length=300)
     username = models.CharField(max_length=200)
-    compName = models.CharField(max_length=200)
-    jobTitle = models.CharField(max_length=200)
+    ssc = models.CharField(max_length=10)
+    hsc = models.CharField(max_length=10)
+    grad = models.CharField(max_length=10)
+    course = models.CharField(max_length=300)
     scores = models.IntegerField()
+    compName = models.CharField(max_length=200)
+    salary = models.BigIntegerField()
+    jobTitle = models.CharField(max_length=200)
     status = models.CharField(max_length=20)
+
+
+class Selection2(models.Model):
+    uid = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE)
+    fullname = models.CharField(max_length=300)
+    username = models.CharField(max_length=200)
+    ssc = models.CharField(max_length=10)
+    hsc = models.CharField(max_length=10)
+    grad = models.CharField(max_length=10)
+    course = models.CharField(max_length=300)
+    scores = models.IntegerField()
+    compName = models.CharField(max_length=200)
+    salary = models.BigIntegerField()
+    jobTitle = models.CharField(max_length=200)
+    status = models.CharField(max_length=20)
+
 

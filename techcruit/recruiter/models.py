@@ -13,6 +13,7 @@ class Register(models.Model):
     percentGrad = models.FloatField()
     salary = models.BigIntegerField()
     experience = models.CharField(max_length=3)
+    max = models.CharField(max_length=150)
 
 
 class Code(models.Model):
@@ -59,3 +60,22 @@ class TestScores(models.Model):
     canUser = models.CharField(max_length=200)
     scores = models.IntegerField()
     status = models.CharField(max_length=20)
+
+
+class BehavioralQuestions(models.Model):
+    question = models.CharField(max_length=2000)
+    qa = models.CharField(max_length=2000)
+    qb = models.CharField(max_length=2000)
+    qc = models.CharField(max_length=2000)
+    qd = models.CharField(max_length=2000)
+    qe = models.CharField(max_length=2000)
+    qAns = models.CharField(max_length=2000)
+
+
+class TestScores2(models.Model):
+    user = models.CharField(max_length=200)
+    canID = models.BigIntegerField()
+    canUser = models.CharField(max_length=200)
+    scores = models.IntegerField()
+    status = models.CharField(max_length=20)
+

@@ -21,17 +21,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
-  <!-- Navbar -->
-  {% include 'candidate/navbar.html' %}
-  <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  {% include 'candidate/sidebar.html' %}
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <br><br>
 
     <!-- Main content -->
     <section class="content">
@@ -39,7 +29,28 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Selection in Companies</h3>
+                <center><h2>Selection in Companies</h2></center>
+            </div>
+            <div class="card-header">
+              <table cellpadding="10">
+                <tr>
+                  <td>
+                    <button type="button" style="height:40px;width:200px" class="btn btn-block bg-gradient-danger">
+                      <a href="/check/writeCSV" style="color: white;">Write CSV</a>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" style="height:50px;width:200px" class="btn btn-block bg-gradient-danger">
+                      <a href="/recruiter/uploadQuestions" style="color: white;">Upload Questions</a>
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" style="height:50px;width:200px" class="btn btn-block bg-gradient-danger">
+                      <a href="/recruiter/deleteAllQuestions" style="color: white;">Delete All Questions</a>
+                    </button>
+                  </td>
+                </tr>
+              </table>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -48,46 +59,34 @@
                 <tr>
                   <th>ID</th>
                   <th>User Name</th>
+                  <th>Full Name</th>
+                  <th>10th Percentage</th>
+                  <th>12th Percentage</th>
+                  <th>Graduation Percentage</th>
+                  <th>Course</th>
                   <th>Company Name</th>
                   <th>Job Title</th>
+                  <th>Salary</th>
                   <th>Scores</th>
                   <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
                     {% for i in s %}
-                        {% if username == i.username %}
-                            <input type="hidden" name="id" value="{{i.id}}">
                             <tr>
                                 <td>{{i.id}}</td>
                                 <td>{{i.username}}</td>
+                                <td>{{i.fullname}}</td>
+                                <td>{{i.ssc}}</td>
+                                <td>{{i.hsc}}</td>
+                                <td>{{i.grad}}</td>
+                                <td>{{i.course}}</td>
                                 <td>{{i.compName}}</td>
                                 <td>{{i.jobTitle}}</td>
+                                <td>{{i.salary}}</td>
                                 <td>{{i.scores}}</td>
-                                {% if i.status == 'Selected' %}
-                                    <td>Test 1 Selected</td>
-                                {% else %}
-                                    <td>Test 1 Rejected</td>
-                                {% endif %}
+                                <td>{{i.status}}</td>
                             </tr>
-                        {% endif %}
-                    {% endfor %}
-                    {% for i in s1 %}
-                        {% if username == i.username %}
-                            <input type="hidden" name="id" value="{{i.id}}">
-                            <tr>
-                                <td>{{i.id}}</td>
-                                <td>{{i.username}}</td>
-                                <td>{{i.compName}}</td>
-                                <td>{{i.jobTitle}}</td>
-                                <td>{{i.scores}}</td>
-                                {% if i.status == 'Selected' %}
-                                    <td>Test 2 Selected</td>
-                                {% else %}
-                                    <td>Test 2 Rejected</td>
-                                {% endif %}
-                            </tr>
-                        {% endif %}
                     {% endfor %}
                 </tbody>
               </table>
@@ -101,7 +100,6 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
-  </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
