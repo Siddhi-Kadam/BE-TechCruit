@@ -16,8 +16,17 @@ Including another URLconf
 
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.check, name='Eligibility Check Page'),
     path('writeCSV', views.writeCSV, name='Write CSV'),
-]
+    path('resumeUpload', views.resumeUpload, name='Upload Resume'),
+    path('resumeUploaded', views.resumeUploaded, name='Uploaded Resume'),
+    path('evaluate', views.evaluate, name='evaluate'),
+    path('resumeAnalysis', views.resumeAnalysis, name='resumeAnalysis'),
+    path('resumeScreening', views.resumeScreening, name='resumeScreening'),
+    path('mlAnalysis', views.mlAnalysis, name='ML Analysis'),
+    path('knn', views.knn, name='KNN'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

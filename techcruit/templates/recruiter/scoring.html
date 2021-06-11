@@ -39,17 +39,18 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Scores for Test 1</h3>
+              <h3 class="card-title">All Candidates Eligible</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
 
-              <table border="1" cellpadding="10" cellspacing="10">
+              <table border="1" cellpadding="8" cellspacing="8">
                 <thead>
                   <tr>
                   <th>ID</th>
                   <th>Marks</th>
                   <th>Full Name</th>
+                  <th>Mail</th>
                   <th>10th %</th>
                   <th>12th %</th>
                   <th>Graduation %</th>
@@ -59,13 +60,14 @@
                   <th>Projects</th>
                   <th>Jobs</th>
                   <th>Coding Languages</th>
-
+                  <th>HackerRank Courses</th>
+                  <th>HackerRank Points</th>
                 </tr>
                 </thead>
                 {% for model_A_object, data in res %}
                     <tr>
                       {% for key, value in data.items %}
-                      <td>{{key}}->{{value}}</td>
+                      <td>{{value}}</td>
                       {% endfor %}<br>
                     </tr>
                 {% endfor %}

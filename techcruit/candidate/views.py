@@ -1,10 +1,13 @@
+from django.core.mail import EmailMultiAlternatives
+from techcruit.settings import EMAIL_HOST_USER
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import PersonalInfo, AcademicInfo, Jobs, Coding, Projects, Selection, Selection2
+from .models import PersonalInfo, AcademicInfo, Jobs, Coding, Projects, Selection, Selection2, HackerRank
 import pyautogui
 from django.shortcuts import render, redirect
 from recruiter.models import SelectedBeforeTest, Register, TestQuestions, TestScores, TestScores2, BehavioralQuestions
-
+from selenium import webdriver
+from nltk.tokenize import word_tokenize
 
 # Create your views here.
 
@@ -284,7 +287,7 @@ def test1(request, id):
     p = PersonalInfo.objects.get(username=username)
     u = Register.objects.get(id=id)
     s = SelectedBeforeTest.objects.all()
-    t = Selection.objects.all()
+    t = Selection2.objects.all()
     for i in t:
         if i.uid_id == p.id and u.name != i.compName and i.status == 'Selected':
             pyautogui.alert("You are already being selected for another company..")
@@ -446,9 +449,26 @@ def test1Scores(request):
         )
         abc.save()
         t = TestScores.objects.filter(user=admin)
+        m = TestQuestions.objects.all()
         for j in t:
             if j.canUser == username:
                 pyautogui.alert("Successfully Submitted")
+                if j.status == "Rejected":
+                    subject = 'Sample Questions from Techcruit'
+                    content = 'Thanks for using Techcruit'
+                    html = "Dear Candidate,<br> We are sorry to inform you that you couldn't crack our Test 1. We are " \
+                           "sending you our sample questions to practice so you could clear it in the next attempt. " \
+                           "All the best for your future endeavors. <br>Thank you for using Techcruit <br>" \
+                           "<table border='1'><tr><td>Question</td><td>Option A</td><td>Option B</td><td>Option " \
+                           "C</td><td>Option D</td><td>Answer</td></tr> "
+                    for i in m:
+                        if i.user == a1.user:
+                            html += "<tr><td>" + i.question + "</td><td>" + i.qa + "</td><td>" + i.qb + "</td><td>" + i.qc + "</td><td>" + i.qd + "</td><td>" + i.qAns + "</td><tr>"
+                    html += "</table>"
+                    msg = EmailMultiAlternatives(f'{subject}', f'{content}', EMAIL_HOST_USER, [f'{cand.email}'])
+                    msg.attach_alternative(html, "text/html")
+                    msg.send()
+                    pyautogui.alert("Sample Questions sent..")
                 return render(request, 'candidate/Scores1.html', {'t': j})
     else:
         pyautogui.alert("Couldn't be submitted")
@@ -576,3 +596,80 @@ def selection(request):
     s = Selection.objects.all()
     s1 = Selection2.objects.all()
     return render(request, 'candidate/selection.html', {'s': s, 's1': s1, 'username': username})
+
+
+def hackerRank(request):
+    username = request.session["user"]
+    p = PersonalInfo.objects.get(username=username)
+    h = HackerRank.objects.all()
+    count = 0
+    for i in h:
+        if i.uid_id == p.id:
+            count = 1
+    if count == 0:
+        return render(request, 'candidate/hackerRank.html', {'username': username})
+    elif count == 1:
+        return render(request, 'candidate/hackVerify.html', {'username': username, 'h': h, 'id': p.id})
+
+
+def hackSaved(request):
+    if request.method == 'POST':
+
+        username = request.session["user"]
+        p = PersonalInfo.objects.get(username=username)
+        # Certification Info
+        proName = request.POST.get('proName')
+        l = word_tokenize(p.name)
+        point = 0
+        courses = ''
+        path = "D:/TRIALS/TRIALS/Selenium/chromedriver.exe"
+        driver = webdriver.Chrome(path)
+        driver.get(proName)
+        if (driver.page_source.__contains__(l[0]) or driver.page_source.__contains__(l[0].lower()) or driver.page_source.__contains__(l[0].upper())) and (driver.page_source.__contains__(l[-1]) or driver.page_source.__contains__(l[-1].lower()) or driver.page_source.__contains__(l[-1].upper())):
+            if driver.page_source.__contains__("Problem Solving"):
+                point += 1
+                courses += 'Problem Solving, '
+            if driver.page_source.__contains__("Python"):
+                point += 1
+                courses += 'Python, '
+            if driver.page_source.__contains__("Rest API"):
+                point += 1
+                courses += 'Rest API, '
+            if driver.page_source.__contains__("Angular"):
+                point += 1
+                courses += 'Angular, '
+            if driver.page_source.__contains__("Node.js"):
+                point += 1
+                courses += 'Node.js, '
+            if driver.page_source.__contains__("R (Basic)"):
+                point += 1
+                courses += 'R (Basic), '
+            if driver.page_source.__contains__("C#"):
+                point += 1
+                courses += 'C#, '
+            if driver.page_source.__contains__("JavaScript"):
+                point += 1
+                courses += 'JavaScript, '
+            if driver.page_source.__contains__("Java"):
+                point += 1
+                courses += 'Java, '
+            if driver.page_source.__contains__("React"):
+                point += 1
+                courses += 'React'
+            driver.quit()
+        else:
+            driver.quit()
+            pyautogui.alert("Certification Profile Doesn't Match")
+            return render(request, 'candidate/hackerRank.html', {'username': username})
+
+        # Saving Certification Info
+        if proName != ['']:
+            abc = HackerRank(uid_id=p.id, rankName=proName, courses=courses, points=point)
+            abc.save()
+            pyautogui.alert("Certification Successfully Saved")
+            h = HackerRank.objects.all()
+            return render(request, 'candidate/hackVerify.html', {'username': username, 'h': h, 'id': p.id})
+
+
+
+

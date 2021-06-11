@@ -11,6 +11,7 @@
         <list>
           <option value="E741" />
           <option value="E111" />
+          <option value="W605" />
         </list>
       </option>
     </inspection_tool>
@@ -19,6 +20,7 @@
         <list>
           <option value="N806" />
           <option value="N802" />
+          <option value="N801" />
         </list>
       </option>
     </inspection_tool>
@@ -28,6 +30,13 @@
           <option value="sum" />
           <option value="next" />
           <option value="id" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="check.views.context" />
         </list>
       </option>
     </inspection_tool>

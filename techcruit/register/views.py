@@ -20,19 +20,15 @@ def registration(request):
         password = request.POST['password']
         re_pass = request.POST['re_pass']
         if password == re_pass:
-            if User.objects.filter(email=email).exists():
-                pu.alert("Email already exists")
+            if User.objects.filter(username=username).exists():
+                pu.alert("Username already exists")
                 return redirect('/register')
             else:
-                if User.objects.filter(username=username).exists():
-                    pu.alert("Username already exists")
-                    return redirect('/register')
-                else:
-                    x = User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email,
-                                                 password=password)
-                    x.save()
-                    pu.confirm("User Created")
-                    return redirect('/')
+                x = User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email,
+                                             password=password)
+                x.save()
+                pu.confirm("User Created")
+                return redirect('/')
         else:
             pu.confirm("Password & Repeated Password don't Match")
             return redirect('/register')

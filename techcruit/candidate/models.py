@@ -85,3 +85,8 @@ class Selection2(models.Model):
     status = models.CharField(max_length=20)
 
 
+class HackerRank(models.Model):
+    uid = models.ForeignKey(PersonalInfo, on_delete=models.CASCADE)
+    rankName = models.CharField(max_length=500, blank=True, null=True)
+    courses = models.CharField(max_length=1000)
+    points = models.IntegerField()

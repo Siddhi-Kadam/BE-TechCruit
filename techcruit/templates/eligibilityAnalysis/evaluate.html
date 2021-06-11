@@ -1,0 +1,15 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" action="/check/evaluate">
+    {% csrf_token %}
+<input type="text" name="ids" value="{{c.id}}">
+    {{c.id}}->{{c.name}}
+    <input name="save" type="submit" value="Evaluate">
+</form>
+</body>
+</html>

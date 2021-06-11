@@ -31,4 +31,7 @@ urlpatterns = [
     path('test1Scores', views.test1Scores, name='Scoring Test 1'),
     path('test2Scores', views.test2Scores, name='Scoring Test 2'),
     path('selection', views.selection, name='Company Selection'),
+    path('hackerRank', views.hackerRank, name='HackerRank Certifications'),
+    path('hackSaved', views.hackSaved, name='HackerRank Certifications Saved'),
+
 ]

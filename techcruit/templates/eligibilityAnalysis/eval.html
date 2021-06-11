@@ -1,0 +1,17 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{id}}->{{u.resume}}
+<br>
+<!--{{datas}}<br>-->
+Subjects Analysed: {% for i in subjects %}{{i}}, {% endfor %}<br>
+Keywords extracted: {{keywords}}<br>
+Score: {{score}}<br>
+<img src={{link}} />
+
+</body>
+</html>

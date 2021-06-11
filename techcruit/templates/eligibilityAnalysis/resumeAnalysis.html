@@ -1,0 +1,20 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" cellpadding="8">
+                {% for model_A_object, data in datas.items %}
+                    <tr>
+                      {% for key, value in data.items %}
+                      <td>{{value}}</td>
+                      {% endfor %}<br>
+                    </tr>
+                {% endfor %}
+              </table>
+<img src={{link}} />
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" cellpadding="8">
+                {% for i in datas %}
+                    <tr>
+                      <td>{{i}}</td>
+                    </tr>
+                {% endfor %}
+              </table>
+<img src={{link}} />
+
+</body>
+</html>

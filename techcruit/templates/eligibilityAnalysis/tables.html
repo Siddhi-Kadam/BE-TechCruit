@@ -29,7 +29,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-                <center><h2>Selection in Companies</h2></center>
+                <center><h2>Selection in Companies according to test 2 scores</h2></center>
             </div>
             <div class="card-header">
               <table cellpadding="10">
@@ -41,12 +41,12 @@
                   </td>
                   <td>
                     <button type="button" style="height:50px;width:200px" class="btn btn-block bg-gradient-danger">
-                      <a href="/recruiter/uploadQuestions" style="color: white;">Upload Questions</a>
+                      <a href="/check/knn" style="color: white;">K.N.N</a>
                     </button>
                   </td>
                   <td>
                     <button type="button" style="height:50px;width:200px" class="btn btn-block bg-gradient-danger">
-                      <a href="/recruiter/deleteAllQuestions" style="color: white;">Delete All Questions</a>
+                      <a href="/check/mlAnalysis" style="color: white;">Plots</a>
                     </button>
                   </td>
                 </tr>
@@ -60,32 +60,18 @@
                   <th>ID</th>
                   <th>User Name</th>
                   <th>Full Name</th>
-                  <th>10th Percentage</th>
-                  <th>12th Percentage</th>
-                  <th>Graduation Percentage</th>
-                  <th>Course</th>
+                  <th>Coding Language</th>
                   <th>Company Name</th>
-                  <th>Job Title</th>
                   <th>Salary</th>
-                  <th>Scores</th>
                   <th>Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                    {% for i in s %}
+                    {% for i, j in s.items %}
                             <tr>
-                                <td>{{i.id}}</td>
-                                <td>{{i.username}}</td>
-                                <td>{{i.fullname}}</td>
-                                <td>{{i.ssc}}</td>
-                                <td>{{i.hsc}}</td>
-                                <td>{{i.grad}}</td>
-                                <td>{{i.course}}</td>
-                                <td>{{i.compName}}</td>
-                                <td>{{i.jobTitle}}</td>
-                                <td>{{i.salary}}</td>
-                                <td>{{i.scores}}</td>
-                                <td>{{i.status}}</td>
+                                {% for m, n in j.items %}
+                                    <td>{{n}}</td>
+                                {% endfor %}
                             </tr>
                     {% endfor %}
                 </tbody>

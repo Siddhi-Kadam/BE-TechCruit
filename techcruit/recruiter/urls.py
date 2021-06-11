@@ -37,4 +37,6 @@ urlpatterns = [
     path('questions2', views.questions2, name='Test 2 Questions'),
     path('scores2', views.scores2, name='Scores for Test 2'),
     path('scoring', views.scoring, name='Scores for Test 2'),
+    path('finals', views.finals, name='Final Selection'),
+    path('mail', views.mail, name='Sending Mail'),
 ]

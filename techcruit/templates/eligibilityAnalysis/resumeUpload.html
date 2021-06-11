@@ -1,0 +1,34 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" action="/check/resumeUploaded" enctype="multipart/form-data" novalidate="">
+    {% csrf_token %}
+
+    <div class="form-row">
+        <div class="name"><h1>Upload CV</h1></div>
+        <div class="form-row">
+                            <div class="name">Name</div>
+                            <div class="value">
+                                <input class="input--style-6" type="text" name="name">
+                            </div>
+        </div>
+        <div class="value">
+            <div class="input-group js-input-file">
+                <input class="input-file" type="file" name="myfile" id="file1">
+<!--                <label class="label&#45;&#45;file" for="file1">Choose file</label>-->
+<!--                <span class="input-file__info">No file chosen</span>-->
+            </div>
+            <div class="label--desc">Upload your CV/Resume. Max file size 50 MB</div>
+        </div>
+    </div>
+    </div><br>
+    <div class="card-footer">
+        <input name="save" type="submit" value="Upload">
+    </div>
+</form>
+</body>
+</html>

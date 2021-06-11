@@ -1,0 +1,52 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" cellpadding="10" cellspacing="10">
+    <tr>
+        <th colspan="2">Neighbor = 5</th>
+        <th>Best Case Scenario</th>
+    </tr>
+    <tr>
+        <td>
+            Plot 1:<br>
+            KNN Score: {{x1}}%<br>
+            Confusion Matrix:<br>
+            {% for i in x2 %}
+                {{i}}<br>
+            {% endfor %}
+        </td>
+        <td>
+            Plot 2:<br>
+            KNN ROC Curve<br>
+            Score: {{x4}}%<br>
+        </td>
+        <td>
+            KNN Neighbors: {{x6}}<br>
+            Best Score: {{x5}}%<br>
+        </td>
+    </tr>
+</table>
+
+
+<table border="1" cellspacing="5", cellpadding="5">
+    <tr>
+        <td colspan="2">Neighbour 5</td>
+    </tr>
+    <tr>
+        <td><img src={{link}} height="700" width="700"/></td>
+        <td><img src={{link1}} height="700" width="700" /></td>
+    </tr>
+    <tr>
+        <td>Plot 1</td>
+        <td>Plot 2</td>
+    </tr>
+</table>
+
+
+
+</body>
+</html>

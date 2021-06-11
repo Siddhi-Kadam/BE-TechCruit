@@ -4,12 +4,12 @@ import pyautogui
 from django.shortcuts import render, redirect
 from .models import Register, Code, SelectedBeforeTest, Registered, TestQuestions, TestScores, BehavioralQuestions, \
     TestScores2
-from candidate.models import PersonalInfo, AcademicInfo, Coding, Jobs, Projects, Selection, Selection2
+from candidate.models import PersonalInfo, AcademicInfo, Coding, Jobs, Projects, Selection, Selection2, HackerRank
 from .resources import ImportsResource
 from django.contrib import messages
 from tablib import Dataset
-from collections import OrderedDict
-from operator import getitem
+from django.core.mail import EmailMultiAlternatives
+from techcruit.settings import EMAIL_HOST_USER
 
 
 # Create your views here.
@@ -99,10 +99,10 @@ def auto_select(request):
                 a = AcademicInfo.objects.get(uid_id=i.id)
                 # codes = Code.objects.get(uid_id=r.id)
                 c = Coding.objects.all()
-                sel = Selection.objects.all()
+                sel = Selection2.objects.all()
                 cal = 0
                 for j in sel:
-                    if j.username == i.username:
+                    if j.username == i.username and j.status == 'Selected' and j.compName != r.name:
                         cal = 1
                         break
                 if i.experience >= r.experience:
@@ -336,19 +336,32 @@ def questions2(request):
 
 def scoring(request):
     username = request.session["user"]
+    res = allCalculate(username)
+    print(res)
+    res.reverse()
+
+    # res = OrderedDict(reversed(list(res.items())))
+    return render(request, 'recruiter/scoring.html', {'username': username, 'res': res})
+
+
+def allCalculate(username):
     r = Register.objects.get(username=username)
     s1 = Selection.objects.all()
     s2 = Selection2.objects.all()
     p = Projects.objects.all()
     jo = Jobs.objects.all()
     c = Coding.objects.all()
+    h = HackerRank.objects.all()
     d = {}
     for i in s1:
         for j in s2:
-            if i.uid_id == j.uid_id and r.name == j.compName and j.status== 'Selected':
+            if i.uid_id == j.uid_id and r.name == j.compName and j.status == 'Selected':
+                pika = PersonalInfo.objects.get(id=i.uid_id)
                 pro = 0
                 job = 0
                 code = 0
+                courses = ''
+                hack = 0
                 for k in p:
                     if k.uid_id == i.uid_id:
                         pro += 1
@@ -358,16 +371,58 @@ def scoring(request):
                 for k in c:
                     if k.uid_id == i.uid_id:
                         code += 1
-                marks = i.scores + j.scores + pro + job + code
-                d[i.uid_id] = {'id': i.uid_id, 'marks': marks, 'fullName': i.fullname, 'ssc': i.ssc, 'hsc': i.hsc, 'grad': i.grad,
+                for k in h:
+                    if k.uid_id == i.uid_id:
+                        hack = k.points
+                        courses = k.courses
+                marks = i.scores + j.scores + pro + job + code + hack
+                d[i.uid_id] = {'id': i.uid_id, 'marks': marks, 'fullName': pika.name, 'mail': pika.email, 'ssc': i.ssc,
+                               'hsc': i.hsc, 'grad': i.grad,
                                'course': i.course, 'test1': i.scores, 'test2': j.scores, 'pro': pro, 'job': job,
-                               'code': code}
+                               'code': code, 'hackCourse': courses, 'hack': hack}
     # res = OrderedDict(sorted(d.items(), key=lambda x: getitem(x[1], 'marks')))
     res = sorted(d.items(), key=lambda x: x[1]['marks'])
-    print(res)
-    res.reverse()
-    # res = OrderedDict(reversed(list(res.items())))
-    return render(request, 'recruiter/scoring.html', {'username': username, 'res': res})
+    return res
+
+
+def calculate(username):
+    r = Register.objects.get(username=username)
+    res = allCalculate(username)
+    d = []
+    for i in res:
+        for j in i:
+            if str(j).isnumeric():
+                pass
+            else:
+                d.append(j)
+    while len(d) > int(r.max):
+        del d[0]
+    return d
+
+
+def finals(request):
+    username = request.session["user"]
+    d = calculate(username)
+    d.reverse()
+    return render(request, 'recruiter/finals.html', {'username': username, 'res': d})
+
+
+def mail(request):
+    username = request.session["user"]
+    d = calculate(username)
+    r = Register.objects.get(username=username)
+    for i in d:
+        for m, n in i.items():
+            if m == 'mail':
+                subject = 'Wishes for getting ready for interview in ' + r.name
+                content = 'Thanks for using Techcruit'
+                html = 'Dear Candidate,<br> Congrats for the interview opportunity.<br>Thank you for using Techcruit'
+                msg = EmailMultiAlternatives(f'{subject}', f'{content}', EMAIL_HOST_USER, [f'{n}'])
+                msg.attach_alternative(html, "text/html")
+                msg.send()
+    pyautogui.alert('Sent')
+    return redirect('/recruiter/finals')
+
 
 
 
